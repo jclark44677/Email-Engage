@@ -1,49 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Banter Email Preview</title>
     <style>
-        /* Centers the image on your screen */
-        body { display: flex; justify-content: center; margin: 0; padding-top: 50px; background: #f4f4f4; }
+        body { background-color: #f4f4f4; display: flex; justify-content: center; padding-top: 50px; margin: 0; }
 
         .email-container {
             position: relative;
-            width: 600px; /* This is your display width */
-            line-height: 0;
+            width: 600px; 
         }
-
+        
         .base-img {
             width: 100%;
             height: auto;
             display: block;
         }
 
-        .hitbox {
-            position: absolute;
-            /* Math: (844 / 1200) */
-            left: 70.33%; 
-            /* Math: (2020 / 3000) */
-            top: 67.33%;  
-            /* Math: (Radius 168 * 2) / 1200 */
-            width: 28%;   
-            aspect-ratio: 1 / 1;
-            
-            /* Ensures the center of this circle sits on the coordinate */
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            
-            /* Visual debugging - delete the background color once it's aligned */
-            background: rgba(255, 0, 0, 0.4); 
-            border: 2px solid red;
-        }
+        /* Removed hover-img and show-hover styles since they are no longer needed */
     </style>
 </head>
 <body>
 
     <div class="email-container">
-        <img src="Email-engage.png" class="base-img">
+        <img src="Banter-sample-email.png" class="base-img" usemap="#button-map">
         
-        <!-- The Clickable Hitbox -->
-        <a href="https://linkedin.com" class="hitbox"></a>
+        <map name="button-map">
+            <!-- 
+                Changed shape to "circle". 
+                Coords format for circle is "x, y, radius". 
+                (Adjust these numbers to fit your specific button location)
+            -->
+            <area shape="circle" 
+                  coords="422,1010,84" 
+                  href="https://www.linkedin.com/in/jill-clark-26b956384/" 
+                  alt="LinkedIn Profile">
+        </map>
     </div>
 
 </body>
