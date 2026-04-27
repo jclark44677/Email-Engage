@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Engage Email - Animated Sequence</title>
+    <style>
+        body { background-color: #f4f4f4; display: flex; justify-content: center; padding-top: 50px; margin: 0; }
+
+        .email-container {
+            position: relative;
+            width: 600px; 
+        }
+        
+        .base-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* All color frames start hidden and stack on top */
+        .button-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            display: block;
+            opacity: 0; 
+            pointer-events: none; 
+            transition: opacity 0.1s; /* Quick fade for each stage */
+        }
+
+        /* Class applied by JavaScript to "light up" a frame */
+        .color-on {
+            opacity: 1 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="email-container">
+        <!-- Main Graphic -->
+        <img src="Email-engage.png" class="base-img" usemap="#button-map">
+        
+        <!-- Light Sequence Layers (ensure these have transparent backgrounds) -->
+        <img src="Engage Button 1.png" id="frame1" class="button-frame">
+        <img src="Engage Button 2.png" id="frame2" class="button-frame">
+        <img src="Engage Button 3.png" id="frame3" class="button-frame">
+        
+        <map name="button-map">
+            <!-- CIRCULAR BUTTON: coords="Center-X, Center-Y, Radius" -->
+            <area shape="circle" 
+                  coords="422,1010,84" 
+                  href="https://linkedin.com" 
+                  onmouseover="startLights()" 
+                  onmouseout="stopLights()">
+        </map>
+    </div>
+
+    <script>
+        let timers = [];
+
+        function startButtonColors() {
+            // Cancel any current reset to avoid flickering
+            timers.forEach(t => clearTimeout(t));
+            timers = [];
+            
+            // Red: Instant trigger
+            timers.push(setTimeout(() => { 
+                document.getElementById('frame1').classList.add('color-on'); 
+            }, 0));
+            
+            // Green: Adds on top after 80ms
+            timers.push(setTimeout(() => { 
+                document.getElementById('frame2').classList.add('color-on'); 
+            }, 80));
+            
+            // Blue: Final state after 160ms
+            timers.push(setTimeout(() => { 
+                document.getElementById('frame3').classList.add('color-on'); 
+            }, 160));
+        }
+
+        function stopColors() {
+            // Stop any pending colors if user moves mouse away fast
+            timers.forEach(t => clearTimeout(t));
+            timers = [];
+            
+            // Turn all button colors off
+            document.getElementById('frame1').classList.remove('color-on');
+            document.getElementById('frame2').classList.remove('color-on');
+            document.getElementById('frame3').classList.remove('color-on');
+        }
+    </script>
+
+</body>
+</html>
