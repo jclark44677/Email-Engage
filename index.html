@@ -1,50 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Engage Email - Precise Sequence</title>
     <style>
-        body { background-color: #f4f4f4; display: flex; justify-content: center; padding-top: 50px; margin: 0; }
-        
-        .email-container { 
-            position: relative; 
-            width: 600px; 
-            max-width: 100%;
-            line-height: 0; 
+        /* Centers the image on your screen */
+        body { display: flex; justify-content: center; margin: 0; padding-top: 50px; background: #f4f4f4; }
+
+        .email-container {
+            position: relative;
+            width: 600px; /* This is your display width */
+            line-height: 0;
         }
 
-        .base-img, .button-frame {
+        .base-img {
             width: 100%;
             height: auto;
             display: block;
         }
 
-        .button-frame {
+        .hitbox {
             position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.1s;
-        }
-
-        /* NEW HITBOX LOGIC: This creates a perfectly centered circle link */
-        .hitbox-link {
-            position: absolute;
-            /* Based on your 1200x3000 master: 844/1200 = 70.3%, 2020/3000 = 67.3% */
+            /* Math: (844 / 1200) */
             left: 70.33%; 
-            top: 67.33%;
-            /* Radius 168px = 336px wide = 28% of width */
-            width: 28%; 
+            /* Math: (2020 / 3000) */
+            top: 67.33%;  
+            /* Math: (Radius 168 * 2) / 1200 */
+            width: 28%;   
             aspect-ratio: 1 / 1;
-            /* Centers the hitbox exactly on the X/Y point */
+            
+            /* Ensures the center of this circle sits on the coordinate */
             transform: translate(-50%, -50%);
             border-radius: 50%;
-            cursor: pointer;
-            z-index: 99;
-            /* background: rgba(255, 0, 0, 0.3); /* UNCOMMENT THIS LINE TO SEE THE BOX FOR TESTING */
+            
+            /* Visual debugging - delete the background color once it's aligned */
+            background: rgba(255, 0, 0, 0.4); 
+            border: 2px solid red;
         }
-
-        .color-on { opacity: 1 !important; }
     </style>
 </head>
 <body>
@@ -52,34 +42,9 @@
     <div class="email-container">
         <img src="Email-engage.png" class="base-img">
         
-        <img src="Engage Button 1.png" id="frame1" class="button-frame">
-        <img src="Engage Button 2.png" id="frame2" class="button-frame">
-        <img src="Engage Button 3.png" id="frame3" class="button-frame">
-        
-        <!-- Invisible clickable layer -->
-        <a href="https://linkedin.com" 
-           class="hitbox-link"
-           onmouseover="startLights()" 
-           onmouseout="stopLights()"></a>
+        <!-- The Clickable Hitbox -->
+        <a href="https://linkedin.com" class="hitbox"></a>
     </div>
 
-    <script>
-        let timers = [];
-        function startLights() {
-            timers.forEach(t => clearTimeout(t));
-            timers = [];
-            timers.push(setTimeout(() => { document.getElementById('frame1').classList.add('color-on'); }, 0));
-            timers.push(setTimeout(() => { document.getElementById('frame2').classList.add('color-on'); }, 80));
-            timers.push(setTimeout(() => { document.getElementById('frame3').classList.add('color-on'); }, 160));
-        }
-
-        function stopLights() {
-            timers.forEach(t => clearTimeout(t));
-            timers = [];
-            document.getElementById('frame1').classList.remove('color-on');
-            document.getElementById('frame2').classList.remove('color-on');
-            document.getElementById('frame3').classList.remove('color-on');
-        }
-    </script>
 </body>
 </html>
