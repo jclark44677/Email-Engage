@@ -1,1 +1,50 @@
-/ main code / 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Banter Email Preview</title>
+    <style>
+        body { background-color: #f4f4f4; display: flex; justify-content: center; padding-top: 50px; margin: 0; }
+
+        .email-container {
+            position: relative;
+            width: 600px; 
+        }
+        
+        .base-img, .hover-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .hover-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0; 
+            pointer-events: none; 
+            transition: opacity 0.2s;
+        }
+
+        .show-hover {
+            opacity: 1 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="email-container">
+       
+        <img src="Banter-sample-email.png" class="base-img" usemap="#button-map">
+        <img src="button.png" id="hoverGraphic" class="hover-img">
+        
+        <map name="button-map">
+            <area shape="rect" 
+                  coords="30,562,352,650" 
+                  href="https://www.linkedin.com/in/jill-clark-26b956384/" 
+                  onmouseover="document.getElementById('hoverGraphic').classList.add('show-hover')" 
+                  onmouseout="document.getElementById('hoverGraphic').classList.remove('show-hover')">
+        </map>
+    </div>
+
+</body>
+</html>
