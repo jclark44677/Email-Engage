@@ -3,58 +3,28 @@
 <head>
     <title>Engage Email - Precise Sequence</title>
     <style>
-        body { 
-            background-color: #f4f4f4; 
-            display: flex; 
-            justify-content: center; 
-            padding-top: 50px; 
-            margin: 0; 
-        }
-        
-        .email-container { 
-            position: relative; 
-            width: 600px; 
-            max-width: 100%;
-            line-height: 0; 
-            margin: 0 auto; /* Ensures the container itself stays centered */
-        }
-        
-        .base-img { 
-            width: 100%; 
-            height: auto; 
-            display: block; 
-        }
-        
+        body { background-color: #f4f4f4; display: flex; justify-content: center; padding-top: 50px; margin: 0; }
+        .email-container { position: relative; width: 600px; line-height: 0; }
+        .base-img { width: 100%; height: auto; display: block; }
         .button-frame {
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: auto;
-            display: block; 
-            opacity: 0; 
-            pointer-events: none; /* Allows the mouse to "see through" the overlays to the map below */
-            transition: opacity 0.1s;
+            position: absolute; top: 0; left: 0; width: 100%; height: auto;
+            display: block; opacity: 0; pointer-events: none; transition: opacity 0.1s;
         }
-        
-        .color-on { 
-            opacity: 1 !important; 
-        }
+        .color-on { opacity: 1 !important; }
     </style>
 </head>
 <body>
 
     <div class="email-container">
-        <!-- Base Email Image -->
         <img src="Email-engage.png" class="base-img" usemap="#button-map" id="targetEmail">
         
-        <!-- Light layers (Must be same 1200x3000 dimensions as base) -->
         <img src="Engage Button 1.png" id="frame1" class="button-frame">
         <img src="Engage Button 2.png" id="frame2" class="button-frame">
         <img src="Engage Button 3.png" id="frame3" class="button-frame">
         
         <map name="button-map">
-            <area id="hitbox" shape="circle" coords="0,0,0" 
+            <!-- We define the coords in the 600px scale directly to avoid JS drift -->
+            <area id="hitbox" shape="circle" coords="422,1010,84" 
                   href="https://linkedin.com" 
                   onmouseover="startLights()" 
                   onmouseout="stopLights()">
@@ -62,39 +32,11 @@
     </div>
 
     <script>
-        const emailImg = document.getElementById('targetEmail');
-        const areaMap = document.getElementById('hitbox');
-
-        function recalculateMap() {
-            // YOUR EXACT FULL-SIZE NUMBERS (from your 1200px wide master file)
-            const origW = 1200;
-            const origX = 844; 
-            const origY = 2020;
-            const origR = 168;
-
-            // Measure current size on screen
-            const currentW = emailImg.offsetWidth;
-            
-            // If image isn't loaded yet, width might be 0; skip until it's ready
-            if (currentW === 0) return;
-
-            const scaleFactor = currentW / origW;
-
-            // Calculate scaled coordinates
-            const finalX = origX * scaleFactor;
-            const finalY = origY * scaleFactor;
-            const finalR = origR * scaleFactor;
-
-            areaMap.coords = `${finalX},${finalY},${finalR}`;
-        }
-
+        // Sequence logic remains the same
         let timers = [];
         function startLights() {
-            // Clear any existing timers to prevent flicker
             timers.forEach(t => clearTimeout(t));
             timers = [];
-            
-            // Sequence the frames
             timers.push(setTimeout(() => { document.getElementById('frame1').classList.add('color-on'); }, 0));
             timers.push(setTimeout(() => { document.getElementById('frame2').classList.add('color-on'); }, 80));
             timers.push(setTimeout(() => { document.getElementById('frame3').classList.add('color-on'); }, 160));
@@ -107,18 +49,6 @@
             document.getElementById('frame2').classList.remove('color-on');
             document.getElementById('frame3').classList.remove('color-on');
         }
-
-        // Event Listeners for robust loading
-        window.addEventListener('load', recalculateMap);
-        window.addEventListener('resize', recalculateMap);
-
-        // Immediate check if image is already in cache
-        if (emailImg.complete) {
-            recalculateMap();
-        }
-
-        // Final safety check after a short delay
-        setTimeout(recalculateMap, 100);
     </script>
 </body>
 </html>
