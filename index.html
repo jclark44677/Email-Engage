@@ -8,6 +8,7 @@
         .email-container { 
             position: relative; 
             width: 600px; 
+            max-width: 100%;
             line-height: 0; 
         }
 
@@ -26,21 +27,21 @@
             transition: opacity 0.1s;
         }
 
-        /* THE NEW HITBOX LOGIC */
-        .hitbox-overlay {
+        /* NEW HITBOX LOGIC: This creates a perfectly centered circle link */
+        .hitbox-link {
             position: absolute;
-            /* Percentages based on your 1200x3000 file: */
-            /* X: 844/1200 = 70.3% | Y: 2020/3000 = 67.3% */
+            /* Based on your 1200x3000 master: 844/1200 = 70.3%, 2020/3000 = 67.3% */
             left: 70.33%; 
             top: 67.33%;
-            /* Radius 168px = 336px wide/tall = 28% of width */
+            /* Radius 168px = 336px wide = 28% of width */
             width: 28%; 
             aspect-ratio: 1 / 1;
-            transform: translate(-50%, -50%); /* Centers the div on the coordinate */
+            /* Centers the hitbox exactly on the X/Y point */
+            transform: translate(-50%, -50%);
             border-radius: 50%;
             cursor: pointer;
-            z-index: 10;
-            background: rgba(255,0,0,0); /* Keep it invisible */
+            z-index: 99;
+            /* background: rgba(255, 0, 0, 0.3); /* UNCOMMENT THIS LINE TO SEE THE BOX FOR TESTING */
         }
 
         .color-on { opacity: 1 !important; }
@@ -51,14 +52,13 @@
     <div class="email-container">
         <img src="Email-engage.png" class="base-img">
         
-        <!-- Animated Layers -->
         <img src="Engage Button 1.png" id="frame1" class="button-frame">
         <img src="Engage Button 2.png" id="frame2" class="button-frame">
         <img src="Engage Button 3.png" id="frame3" class="button-frame">
         
-        <!-- The Invisible Button -->
+        <!-- Invisible clickable layer -->
         <a href="https://linkedin.com" 
-           class="hitbox-overlay"
+           class="hitbox-link"
            onmouseover="startLights()" 
            onmouseout="stopLights()"></a>
     </div>
