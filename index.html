@@ -4,35 +4,66 @@
     <title>Engage Email - Precise Sequence</title>
     <style>
         body { background-color: #f4f4f4; display: flex; justify-content: center; padding-top: 50px; margin: 0; }
-        .email-container { position: relative; width: 600px; line-height: 0; }
-        .base-img { width: 100%; height: auto; display: block; }
-        .button-frame {
-            position: absolute; top: 0; left: 0; width: 100%; height: auto;
-            display: block; opacity: 0; pointer-events: none; transition: opacity 0.1s;
+        
+        .email-container { 
+            position: relative; 
+            width: 600px; 
+            line-height: 0; 
         }
+
+        .base-img, .button-frame {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .button-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.1s;
+        }
+
+        /* THE NEW HITBOX LOGIC */
+        .hitbox-overlay {
+            position: absolute;
+            /* Percentages based on your 1200x3000 file: */
+            /* X: 844/1200 = 70.3% | Y: 2020/3000 = 67.3% */
+            left: 70.33%; 
+            top: 67.33%;
+            /* Radius 168px = 336px wide/tall = 28% of width */
+            width: 28%; 
+            aspect-ratio: 1 / 1;
+            transform: translate(-50%, -50%); /* Centers the div on the coordinate */
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            background: rgba(255,0,0,0); /* Keep it invisible */
+        }
+
         .color-on { opacity: 1 !important; }
     </style>
 </head>
 <body>
 
     <div class="email-container">
-        <img src="Email-engage.png" class="base-img" usemap="#button-map" id="targetEmail">
+        <img src="Email-engage.png" class="base-img">
         
+        <!-- Animated Layers -->
         <img src="Engage Button 1.png" id="frame1" class="button-frame">
         <img src="Engage Button 2.png" id="frame2" class="button-frame">
         <img src="Engage Button 3.png" id="frame3" class="button-frame">
         
-        <map name="button-map">
-            <!-- We define the coords in the 600px scale directly to avoid JS drift -->
-            <area id="hitbox" shape="circle" coords="422,1010,84" 
-                  href="https://linkedin.com" 
-                  onmouseover="startLights()" 
-                  onmouseout="stopLights()">
-        </map>
+        <!-- The Invisible Button -->
+        <a href="https://linkedin.com" 
+           class="hitbox-overlay"
+           onmouseover="startLights()" 
+           onmouseout="stopLights()"></a>
     </div>
 
     <script>
-        // Sequence logic remains the same
         let timers = [];
         function startLights() {
             timers.forEach(t => clearTimeout(t));
