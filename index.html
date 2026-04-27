@@ -1,54 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Engage Email - Animated Sequence</title>
+    <title>Engage Email - Precise Sequence</title>
     <style>
         body { background-color: #f4f4f4; display: flex; justify-content: center; padding-top: 50px; margin: 0; }
-
-        .email-container {
-            position: relative;
-            width: 600px; 
-            line-height: 0; /* Critical for removing ghost spacing */
-        }
-        
-        .base-img {
-            width: 600px; /* Fixed width to match coords */
-            height: auto;
-            display: block;
-        }
-
+        .email-container { position: relative; width: 600px; line-height: 0; }
+        .base-img { width: 100%; height: auto; display: block; }
         .button-frame {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: auto;
-            display: block;
-            opacity: 0; 
-            pointer-events: none; 
-            transition: opacity 0.1s; 
+            position: absolute; top: 0; left: 0; width: 100%; height: auto;
+            display: block; opacity: 0; pointer-events: none; transition: opacity 0.1s;
         }
-
-        .color-on {
-            opacity: 1 !important;
-        }
+        .color-on { opacity: 1 !important; }
     </style>
 </head>
 <body>
 
     <div class="email-container">
-        <!-- Main Graphic -->
-        <img src="Email-engage.png" class="base-img" usemap="#button-map">
+        <!-- Using 'id' for reliable script targeting -->
+        <img src="Email-engage.png" class="base-img" usemap="#button-map" id="targetEmail">
         
-        <!-- Frame Layers -->
+        <!-- Light layers -->
         <img src="Engage Button 1.png" id="frame1" class="button-frame">
         <img src="Engage Button 2.png" id="frame2" class="button-frame">
         <img src="Engage Button 3.png" id="frame3" class="button-frame">
         
         <map name="button-map">
-            <!-- Manual half-size coords: 422, 1010, 84 -->
-            <area shape="circle" 
-                  coords="506,1010,84" 
+            <!-- Coordinates are set to 0 initially; the script fills them in -->
+            <area id="hitbox" shape="circle" coords="0,0,0" 
                   href="https://linkedin.com" 
                   onmouseover="startLights()" 
                   onmouseout="stopLights()">
@@ -56,14 +34,33 @@
     </div>
 
     <script>
-        let timers = [];
+        const emailImg = document.getElementById('targetEmail');
+        const areaMap = document.getElementById('hitbox');
 
+        // This function forces the browser to match your exact coordinates
+        function recalculateMap() {
+            // YOUR EXACT FULL-SIZE NUMBERS (1200px wide file)
+            const origW = 1200;
+            const origX = 844; 
+            const origY = 2020;
+            const origR = 168;
+
+            // Measure the current size on screen (handles DPI/Scaling)
+            const currentW = emailImg.offsetWidth;
+            const scaleFactor = currentW / origW;
+
+            // Final calculated coordinates
+            const finalX = origX * scaleFactor;
+            const finalY = origY * scaleFactor;
+            const finalR = origR * scaleFactor;
+
+            areaMap.coords = `${finalX},${finalY},${finalR}`;
+        }
+
+        let timers = [];
         function startLights() {
-            // Reset timers
             timers.forEach(t => clearTimeout(t));
             timers = [];
-            
-            // Activate stages
             timers.push(setTimeout(() => { document.getElementById('frame1').classList.add('color-on'); }, 0));
             timers.push(setTimeout(() => { document.getElementById('frame2').classList.add('color-on'); }, 80));
             timers.push(setTimeout(() => { document.getElementById('frame3').classList.add('color-on'); }, 160));
@@ -72,12 +69,16 @@
         function stopLights() {
             timers.forEach(t => clearTimeout(t));
             timers = [];
-            
             document.getElementById('frame1').classList.remove('color-on');
             document.getElementById('frame2').classList.remove('color-on');
             document.getElementById('frame3').classList.remove('color-on');
         }
-    </script>
 
+        // Run when images load and when screen sizes change
+        window.onload = recalculateMap;
+        window.onresize = recalculateMap;
+        // Trigger immediately if image is already cached
+        if (emailImg.complete) { recalculateMap(); }
+    </script>
 </body>
 </html>
