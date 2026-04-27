@@ -38,52 +38,45 @@
     <div class="email-container">
         <img src="Email-engage.png" class="base-img" usemap="#button-map">
         
-        <!-- Ensure these file names match your GitHub files exactly -->
         <img src="Engage Button 1.png" id="frame1" class="button-frame">
         <img src="Engage Button 2.png" id="frame2" class="button-frame">
         <img src="Engage Button 3.png" id="frame3" class="button-frame">
         
         <map name="button-map">
-            <!-- Coordinates originally were 844, 2020, and 168
+            <!-- Use the ORIGINAL full-size coordinates here -->
             <area shape="circle" 
-                  coords="422,1010,84" 
+                  coords="844,2020,168" 
                   href="https://linkedin.com" 
                   onmouseover="startLights()" 
                   onmouseout="stopLights()">
         </map>
     </div>
 
+    <!-- Image Map Resizer Script -->
+    <script src="https://cloudflare.com"></script>
+
     <script>
+        // Initialize the resizer
+        imageMapResize();
+
         let timers = [];
 
-        // This name now matches the "onmouseover" in your HTML
         function startLights() {
             timers.forEach(t => clearTimeout(t));
             timers = [];
             
-            timers.push(setTimeout(() => { 
-                document.getElementById('frame1').classList.add('color-on'); 
-            }, 0));
-            
-            timers.push(setTimeout(() => { 
-                document.getElementById('frame2').classList.add('color-on'); 
-            }, 80));
-            
-            timers.push(setTimeout(() => { 
-                document.getElementById('frame3').classList.add('color-on'); 
-            }, 160));
+            timers.push(setTimeout(() => { document.getElementById('frame1').classList.add('color-on'); }, 0));
+            timers.push(setTimeout(() => { document.getElementById('frame2').classList.add('color-on'); }, 80));
+            timers.push(setTimeout(() => { document.getElementById('frame3').classList.add('color-on'); }, 160));
         }
 
-        // This name now matches the "onmouseout" in your HTML
         function stopLights() {
             timers.forEach(t => clearTimeout(t));
             timers = [];
-            
             document.getElementById('frame1').classList.remove('color-on');
             document.getElementById('frame2').classList.remove('color-on');
             document.getElementById('frame3').classList.remove('color-on');
         }
     </script>
-
 </body>
 </html>
