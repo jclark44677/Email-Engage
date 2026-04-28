@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Engage Email Preview</title>
+    <title>Banter Email Preview</title>
     <style>
         body { background-color: #f4f4f4; display: flex; justify-content: center; padding-top: 50px; margin: 0; }
 
@@ -16,24 +16,63 @@
             display: block;
         }
 
-        /* Removed hover-img and show-hover styles since they are no longer needed */
+        /* Container for the animation frames */
+        .animation-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Let clicks pass through to the <map> */
+        }
+
+        .frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0; /* Hidden by default */
+        }
+
+        /* Animation Logic */
+        @keyframes playAnimation {
+            0%, 32% { opacity: 0; }
+            33% { opacity: 1; } /* Frame 1 (Red) */
+            65% { opacity: 0; }
+            66% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        /* Triggering the frames in succession on hover */
+        .email-container:hover .frame-1 { animation: flash 0.6s step-end 0s; }
+        .email-container:hover .frame-2 { animation: flash 0.6s step-end 0.2s; }
+        .email-container:hover .frame-3 { animation: flash 0.6s step-end 0.4s; }
+
+        @keyframes flash {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
     <div class="email-container">
-        <img src="Email-engage.png" class="base-img" usemap="#button-map">
+        <!-- Base Email Image -->
+        <img src="Banter-sample-email.png" class="base-img" usemap="#button-map">
         
-<map name="button-map">
-    <!-- 
-        Square shape (using 'rect' with equal sides)
-        Coords: top-left x, top-left y, bottom-right x, bottom-right y
-    -->
-<area shape="circle" 
-      coords="438, 1007, 68" 
-      href="https://linkedin.com" 
-      alt="LinkedIn Profile">
-</map>
+        <!-- Animated Frames -->
+        <div class="animation-overlay">
+            <img src="Button 1.png" class="frame frame-1">
+            <img src="Button 2.png" class="frame frame-2">
+            <img src="Button 3.png" class="frame frame-3">
+        </div>
+
+        <map name="button-map">
+            <area shape="circle" 
+                  coords="438, 1007, 68" 
+                  href="https://linkedin.com" 
+                  alt="LinkedIn Profile">
+        </map>
     </div>
 
 </body>
