@@ -14,16 +14,18 @@
             width: 100%;
             height: auto;
             display: block;
+            position: relative;
+            z-index: 1; /* Ensures it stays visible */
         }
 
-        /* Overlay for the animation frames */
         .animation-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Let clicks pass through to the hitbox */
+            z-index: 2; /* Sits on top of base-img */
+            pointer-events: none; 
         }
 
         .frame {
@@ -32,28 +34,25 @@
             left: 0;
             width: 100%;
             height: auto;
-            opacity: 0; /* Hidden by default */
+            opacity: 0;
         }
 
-        /* Animation Trigger: When hovering the container, play the frames in sequence */
+        /* Logic: Hovering the container triggers the individual frames */
         .email-container:hover .frame-1 { animation: flash 0.6s step-end 0s; }
         .email-container:hover .frame-2 { animation: flash 0.6s step-end 0.2s; }
         .email-container:hover .frame-3 { animation: flash 0.6s step-end 0.4s; }
 
         @keyframes flash {
-            0% { opacity: 1; }
-            33% { opacity: 1; } /* Keeps it visible for its duration */
-            100% { opacity: 0; }
+            0%, 100% { opacity: 1; }
         }
     </style>
 </head>
 <body>
 
     <div class="email-container">
-        <!-- Main Image -->
+        <!-- Make sure this file is in the SAME folder as this HTML file -->
         <img src="Email-engage.png" class="base-img" usemap="#button-map">
         
-        <!-- Animation Frames -->
         <div class="animation-overlay">
             <img src="Button 1.png" class="frame frame-1">
             <img src="Button 2.png" class="frame frame-2">
@@ -61,7 +60,6 @@
         </div>
 
         <map name="button-map">
-            <!-- Perfect Circle Hitbox -->
             <area shape="circle" 
                   coords="438, 1007, 68" 
                   href="https://linkedin.com" 
