@@ -16,14 +16,14 @@
             display: block;
         }
 
-        /* Container for the animation frames */
+        /* Overlay for the animation frames */
         .animation-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Let clicks pass through to the <map> */
+            pointer-events: none; /* Let clicks pass through to the hitbox */
         }
 
         .frame {
@@ -31,25 +31,18 @@
             top: 0;
             left: 0;
             width: 100%;
+            height: auto;
             opacity: 0; /* Hidden by default */
         }
 
-        /* Animation Logic */
-        @keyframes playAnimation {
-            0%, 32% { opacity: 0; }
-            33% { opacity: 1; } /* Frame 1 (Red) */
-            65% { opacity: 0; }
-            66% { opacity: 0; }
-            100% { opacity: 0; }
-        }
-
-        /* Triggering the frames in succession on hover */
+        /* Animation Trigger: When hovering the container, play the frames in sequence */
         .email-container:hover .frame-1 { animation: flash 0.6s step-end 0s; }
         .email-container:hover .frame-2 { animation: flash 0.6s step-end 0.2s; }
         .email-container:hover .frame-3 { animation: flash 0.6s step-end 0.4s; }
 
         @keyframes flash {
             0% { opacity: 1; }
+            33% { opacity: 1; } /* Keeps it visible for its duration */
             100% { opacity: 0; }
         }
     </style>
@@ -57,10 +50,10 @@
 <body>
 
     <div class="email-container">
-        <!-- Base Email Image -->
-        <img src="Banter-sample-email.png" class="base-img" usemap="#button-map">
+        <!-- Main Image -->
+        <img src="Engage-email.png" class="base-img" usemap="#button-map">
         
-        <!-- Animated Frames -->
+        <!-- Animation Frames -->
         <div class="animation-overlay">
             <img src="Button 1.png" class="frame frame-1">
             <img src="Button 2.png" class="frame frame-2">
@@ -68,6 +61,7 @@
         </div>
 
         <map name="button-map">
+            <!-- Perfect Circle Hitbox -->
             <area shape="circle" 
                   coords="438, 1007, 68" 
                   href="https://linkedin.com" 
