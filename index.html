@@ -24,19 +24,25 @@
             height: auto;
             opacity: 0; 
             pointer-events: none;
-            z-index: 10; /* Ensures the animation shows on top */
+            z-index: 10;
         }
 
-        /* Animation Sequence */
+        /* Animation for Frame 1 & 2 (Flash on then off) */
         @keyframes sequence {
             0% { opacity: 1; }
             100% { opacity: 0; }
         }
 
-        /* Trigger classes for the 3 frames */
-        .play-1 { animation: sequence 0.2s step-end 0s; }
-        .play-2 { animation: sequence 0.2s step-end 0.2s; }
-        .play-3 { animation: sequence 0.2s step-end 0.4s; }
+        /* Animation for Frame 3 (Flash on and STAY on) */
+        @keyframes hold {
+            0% { opacity: 1; }
+            100% { opacity: 1; }
+        }
+
+        /* Faster timing: 0.1s steps */
+        .play-1 { animation: sequence 0.1s step-end 0s; }
+        .play-2 { animation: sequence 0.1s step-end 0.1s; }
+        .play-3 { animation: hold 0.1s step-end 0.2s forwards; } /* 'forwards' keeps it visible */
     </style>
 </head>
 <body>
@@ -44,7 +50,6 @@
     <div class="email-container">
         <img src="Email-engage.png" class="base-img" usemap="#button-map">
         
-        <!-- Updated Filenames -->
         <img src="Engage Button 1.png" id="b1" class="frame">
         <img src="Engage Button 2.png" id="b2" class="frame">
         <img src="Engage Button 3.png" id="b3" class="frame">
@@ -60,7 +65,6 @@
 
     <script>
         function startAnim() {
-            console.log("Animation Triggered!"); 
             document.getElementById('b1').classList.add('play-1');
             document.getElementById('b2').classList.add('play-2');
             document.getElementById('b3').classList.add('play-3');
